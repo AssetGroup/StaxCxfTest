@@ -1,5 +1,7 @@
 package util.handlers;
 
+import org.codehaus.stax2.ri.evt.CharactersEventImpl;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -24,7 +26,7 @@ public class XmlStaxHandler {
      * @throws Exception
      */
     public void testParse() throws Exception{
-        parseStartDocument();
+        parseStartDocument(true);
         parseStartTag("root", true);
         
         String tmp = parseTaggedChars("first", true);
@@ -38,12 +40,14 @@ public class XmlStaxHandler {
         close();
     }
     
-    private void parseStartDocument() throws Exception{
+    private void parseStartDocument(boolean newLine) throws Exception{
         XMLEvent xmlEvent = eventReader.nextEvent();
         
         if(xmlEvent == null) throw new Exception("No start document found");
         if(xmlEvent.getEventType() != XMLEvent.START_DOCUMENT)
             throw new Exception("Element is not start document");
+
+//        if(newLine) parseNewLine();
     }
     
     private void parseStartTag(String tagName, boolean newLine) throws Exception{
@@ -98,8 +102,9 @@ public class XmlStaxHandler {
         if(xmlEvent == null) throw new Exception("No characters found");
         if(xmlEvent.getEventType() != XMLEvent.CHARACTERS)
             throw new Exception("No characters found");
-        
-        return xmlEvent.toString();
+
+        //todo: cto - I had to change this to get the parse working.  Apparently the toString was returning the event type
+        return ((CharactersEventImpl)xmlEvent).getData();
     }
     
     private void close() throws Exception{
