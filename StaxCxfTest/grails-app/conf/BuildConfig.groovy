@@ -16,10 +16,10 @@ grails.project.dependency.resolution = {
 
         // uncomment the below to enable remote dependency resolution
         // from public Maven repositories
-        //mavenLocal()
-        //mavenCentral()
+        mavenLocal()
+        mavenCentral()
         //mavenRepo "http://snapshots.repository.codehaus.org"
-        //mavenRepo "http://repository.codehaus.org"
+        mavenRepo "http://repo.grails.org/grails/repo/"
         //mavenRepo "http://download.java.net/maven/2/"
         //mavenRepo "http://repository.jboss.com/maven2/"
     }
@@ -33,6 +33,13 @@ grails.project.dependency.resolution = {
         }
 
         compile('javax.xml.stream:stax-api:1.0-2')
-        
+
+        test "org.spockframework:spock-grails-support:0.6-groovy-1.7"
+    }
+
+    plugins {
+        test(":spock:0.6") {
+            exclude "spock-grails-support"
+        }
     }
 }

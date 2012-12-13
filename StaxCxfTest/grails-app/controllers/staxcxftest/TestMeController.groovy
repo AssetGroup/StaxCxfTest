@@ -10,16 +10,16 @@ class TestMeController {
         println "Testing..."
         
         try{
-            File testFile = new File("TestFile.xml")
+
             
-            XmlStaxHandler staxHandler = new XmlStaxHandler(testFile)
-            staxHandler.testParse()
-            
-            println "Test OK"
+            render "Test OK"
+            return
             
         }catch(Exception e){
             println "Test KO:"
             e.printStackTrace()
+            render e.toString()
+            return
         }
         
         redirect(uri: "/")
