@@ -2,6 +2,7 @@ package staxcxftest
 
 import spock.lang.Specification
 import util.handlers.XmlStaxHandler
+import util.handlers.XmlStaxHandlerToString
 
 /**
  */
@@ -17,5 +18,17 @@ class StaxCxfSpec extends Specification {
 
         then:
         notThrown Exception
+    }
+
+    def "test that stax fails when using the toString on the xmlEvent"() {
+        given:
+        File testFile = new File("TestFile.xml")
+        XmlStaxHandlerToString staxHandler = new XmlStaxHandlerToString(testFile)
+
+        when:
+        staxHandler.testParse()
+
+        then:
+        thrown Exception
     }
 }
